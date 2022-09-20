@@ -3,17 +3,45 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       https://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       https://www.springframework.org/scheme/context/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:musicPlayer.properties"/>
 
     <bean id="musicBean"
           class="com.fastjack24.ClassicalMusic">
     </bean>
 
+    <bean id="musicBeanClassical"
+          class="com.fastjack24.ClassicalMusic"
+          init-method="doInit"
+          destroy-method="doDestroy"> <!-- Init and Destroy for logic after bean creation and before destruction -->
+    </bean>
+
+    <bean id="musicBeanRock"
+          class="com.fastjack24.RockMusic">
+    </bean>
+
+    <bean id="musicBeanRap"
+          class="com.fastjack24.RapMusic">
+    </bean>
+
     <bean id="musicPlayer"
           class="com.fastjack24.MusicPlayer">
-        <constructor-arg ref="musicBean"/>
+        <constructor-arg ref="musicBeanClassical"/> <!-- We can also have an index here (with many constructors inputs)
+                                                and value also with simple things-->
+        <property name="music" ref="musicBeanRap"/> <!-- For setters Spring finds it by itself -->
+        <!-- If we have constructor and setter on the same field, this thing acts like a sequence of actions -->
+        <property name="name" value="Andrew's PLAYER"/>
+        <property name="volume" value="${musicPlayer.volume}"/>
+        <property name="musicList">
+            <list>
+                <ref bean="musicBeanClassical"/>
+                <ref bean="musicBeanRap"/>
+                <ref bean="musicBeanRock"/>
+            </list>
+        </property>
     </bean>
 
 </beans>
