@@ -1,5 +1,9 @@
 package com.fastjack24;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.List;
 
 public class MusicPlayer {
@@ -17,7 +21,8 @@ public class MusicPlayer {
         this.music = music;
     }
 
-    public void setMusic(Music music) {
+    @Autowired
+    public void setMusic(@Qualifier("musicBeanRap") Music music) {
         this.music = music;
     }
 
@@ -25,6 +30,7 @@ public class MusicPlayer {
         return name;
     }
 
+    @Value("Andrew's PLAYER")
     public void setName(String name) {
         this.name = name;
     }
@@ -33,6 +39,7 @@ public class MusicPlayer {
         return volume;
     }
 
+    @Value("${musicPlayer.volume}")
     public void setVolume(int volume) {
         this.volume = volume;
     }
@@ -41,7 +48,8 @@ public class MusicPlayer {
         return musicList;
     }
 
-    public void setMusicList(List<Music> musicList) {
+    @Autowired
+    public void setMusicList(@Qualifier("musicList") List<Music> musicList) {
         this.musicList = musicList;
     }
 
