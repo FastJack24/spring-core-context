@@ -8,8 +8,12 @@ public class Main {
                 "applicationContext.xml"
         ); // MUST be in resource folder
 
-        TestBean testBean = context.getBean("testBean", TestBean.class);
+        Music music = context.getBean("musicBean", Music.class); // There we can choose an implementation in xml.
+        MusicPlayer musicPlayer = new MusicPlayer(music); // We inject, not Spring.
+        musicPlayer.playMusic();
 
-        System.out.println(testBean.getName());
+        musicPlayer = context.getBean("musicPlayer", MusicPlayer.class); // DI with Spring XML configuration.
+        musicPlayer.playMusic();
+        System.out.println("----------");
     }
 }

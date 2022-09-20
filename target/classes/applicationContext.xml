@@ -6,8 +6,14 @@
        https://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        https://www.springframework.org/scheme/context/spring-context.xsd">
-    <bean id="testBean"
-          class="com.fastjack24.TestBean">
-        <constructor-arg value="Andrew"/>
+
+    <bean id="musicBean"
+          class="com.fastjack24.ClassicalMusic">
     </bean>
+
+    <bean id="musicPlayer"
+          class="com.fastjack24.MusicPlayer">
+        <constructor-arg ref="musicBean"/>
+    </bean>
+
 </beans>
